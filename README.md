@@ -129,8 +129,8 @@ CloudFinance is designed as a **serverless full-stack application**:
 
 ##  Architecture
 
-```mermaid
-flowchart LR
+```mermaid```
+flowchart LR 
   A[React Frontend (Amplify)] -->|fetch| B(API Gateway HTTP)
   B --> C[Lambda (Python)]
   C --> D[(DynamoDB: finance-tx)]
