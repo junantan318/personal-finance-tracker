@@ -131,9 +131,9 @@ CloudFinance is designed as a **serverless full-stack application**:
 
 ```mermaid```
 flowchart LR 
-  A[React Frontend (Amplify)] -->|fetch| B(API Gateway HTTP)
-  B --> C[Lambda (Python)]
-  C --> D[(DynamoDB: finance-tx)]
-  C --> E[(S3: Import/Export Files)]
-  F((Amazon Bedrock)) --> C
-  G((Cognito)) --> B
+    A[React Frontend (Amplify)] -->|fetch| B(API Gateway HTTP)
+    B --> C[Lambda (Python)]
+    C --> D[(DynamoDB: finance-tx)]
+    C --> E[(S3: Import/Export Files)]
+    F((Amazon Bedrock)) --> C
+    G((Cognito)) --> B
