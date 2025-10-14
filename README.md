@@ -183,11 +183,12 @@ You should receive a response like:
 
 ##  Architecture
 
-```mermaid```
-flowchart LR 
-- A[React Frontend (Amplify)] -->|fetch| B(API Gateway HTTP)
-- B --> C[Lambda (Python)]
-- C --> D[(DynamoDB: finance-tx)]
-- C --> E[(S3: Import/Export Files)]
-- F((Amazon Bedrock)) --> C
-- G((Cognito)) --> B
+``` mermaid 
+    flowchart LR
+        A[React Frontend (Amplify)] -->|fetch| B(API Gateway HTTP)
+        B --> C[Lambda (Python)]
+        C --> D[(DynamoDB: finance-tx)]
+        C --> E[(S3: Import/Export Files)]
+        F((Amazon Bedrock)) --> C
+        G((Cognito)) --> B
+```
