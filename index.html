@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8"><title>CloudFinance (MVP)</title></head>
+  <body>
+    <h1>CloudFinance (MVP)</h1>
+    <input id="amount" type="number" step="0.01" placeholder="Amount">
+    <select id="type"><option value="expense">expense</option><option value="income">income</option></select>
+    <input id="cat" placeholder="Category">
+    <input id="note" placeholder="Note">
+    <button id="add">Add</button>
+    <button id="list">List</button>
+    <button id="sum">Summary (today)</button>
+    <pre id="out"></pre>
+
+    <script>
+      const API = "https://ionc78h0hj.execute-api.eu-north-1.amazonaws.com";
+
+      async function call(path, method, body){
+        const r = await fetch(API + path, {
+          method,
+          headers: {"Content-Type":"application/json"},
+          body: body ? JSON.stringify(body) : undefined
+        });
+        return r.json();
+      }
+
+      add.onclick = async () => {
+        const amount = parseFloat(document.getElementById('amount').value);
+        const type = document.getElementById('type').value;
+        const category = document.getElementById('cat').value || "Other";
+        const note = document.getElementById('note').value || "";
+        const res = await call("/transaction","POST",{amount,type,category,note});
+        out.textContent = JSON.stringify(res, null, 2);
+      };
+
+      list.onclick = async () => {
+        const res = await call("/transactions","GET");
+        out.textContent = JSON.stringify(res, null, 2);
+      };
+
+      sum.onclick = async () => {
+        const res = await call("/summary","GET");
+        out.textContent = JSON.stringify(res, null, 2);
+      };
+    </script>
+  </body>
+</html>
