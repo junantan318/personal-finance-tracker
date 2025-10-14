@@ -34,6 +34,60 @@ CloudFinance is designed as a **serverless full-stack application**:
 
 ---
 
+## Quick Start (MVP)
+
+### Backend
+
+1. **Deploy Lambda:**
+   - Create a function named `finance-handler`
+   - Set environment variable `TX_TABLE=finance-tx`
+
+2. **Create DynamoDB Table:**
+   - Table name: `finance-tx`
+   - Partition key: `pk` (String)
+   - Sort key: `sk` (String)
+
+3. **Configure API Gateway Routes:**
+   - `POST /transaction`
+   - `GET /transactions`
+   - `GET /summary`
+
+4. **Enable CORS:**
+   - Allowed origins: `*`
+   - Methods: `GET, POST, OPTIONS`
+   - Headers: `Content-Type`
+
+### Frontend
+
+1. Update the `API` variable in your HTML/React code with your **API Gateway Invoke URL**  
+   Example:
+   ```js
+   const API = "https://your-api-id.execute-api.eu-north-1.amazonaws.com";
+
+### Test
+
+Run this command in your terminal (replace `YOUR_API_URL` with your API Gateway URL):
+
+```bash```
+curl -X POST "https://YOUR_API_URL/transaction" \
+  -H "Content-Type: application/json" \
+  -d '{"amount":10,"type":"expense","category":"Food","note":"Lunch"}'
+
+You should receive a response like:
+
+{
+  "ok": true,
+  "tx": {
+    "pk": "user#demo",
+    "sk": "tx#2025-10-14T12:00:00",
+    "amount": 10,
+    "type": "expense",
+    "category": "Food",
+    "note": "Lunch"
+  }
+}
+---
+
 ## Roadmap
 
 ### **v0.2 - React UI + Authentication**
@@ -130,10 +184,11 @@ CloudFinance is designed as a **serverless full-stack application**:
 ##  Architecture
 
 ```mermaid```
-flowchart LR 
+flowchart TD
+    title CloudFinance Architecture
     A[React Frontend (Amplify)] -->|fetch| B(API Gateway HTTP)
     B --> C[Lambda (Python)]
-    C --> D[(DynamoDB: finance-tx)]
+    C --> D[(DynamoDB)]
     C --> E[(S3: Import/Export Files)]
     F((Amazon Bedrock)) --> C
     G((Cognito)) --> B
