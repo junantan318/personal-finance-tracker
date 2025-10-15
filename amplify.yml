@@ -3,12 +3,28 @@ frontend:
   phases:
     preBuild:
       commands:
+        - set -e
+        - node -v
+        - npm -v
+        - echo "=== repo root ==="
+        - pwd
+        - ls -la
+        - echo "=== cd frontend ==="
         - cd frontend
+        - pwd
+        - ls -la
+        - echo "=== install ==="
         - if [ -f package-lock.json ]; then npm ci; else npm install; fi
+        - echo "=== show package.json (scripts/deps) ==="
+        - cat package.json
     build:
       commands:
+        - set -e
         - cd frontend
+        - echo "=== running build ==="
         - npm run build
+        - echo "=== list dist ==="
+        - ls -la dist || true
   artifacts:
     baseDirectory: frontend/dist
     files:
