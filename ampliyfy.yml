@@ -4,13 +4,12 @@ frontend:
     preBuild:
       commands:
         - cd frontend
-        - npm ci
+        - if exist package-lock.json (npm ci) else (npm install)
     build:
       commands:
         - cd frontend
         - npm run build
   artifacts:
-    # Amplify serves files from this folder after build
     baseDirectory: frontend/dist
     files:
       - '**/*'
