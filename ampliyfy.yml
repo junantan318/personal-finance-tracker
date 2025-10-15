@@ -4,7 +4,7 @@ frontend:
     preBuild:
       commands:
         - cd frontend
-        - if exist package-lock.json (npm ci) else (npm install)
+        - if [ -f package-lock.json ]; then npm ci; else npm install; fi
     build:
       commands:
         - cd frontend
